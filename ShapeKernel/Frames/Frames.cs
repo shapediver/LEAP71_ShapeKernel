@@ -33,7 +33,10 @@
 //
 
 
+using System;
+using PicoGK;
 using System.Numerics;
+using System.Collections.Generic;
 
 
 namespace Leap71
@@ -248,7 +251,7 @@ namespace Leap71
 
                 //add continuous start and end
                 aTangents.Insert(0, aTangents[0]);
-                aTangents.Add(aTangents[^1]);
+                aTangents.Add(aTangents[aTangents.Count - 1]);
                 return aTangents;
             }
 

@@ -32,9 +32,9 @@
 // limitations under the License.   
 //
 
-
+using PicoGK;
 using System.Numerics;
-
+using System.Collections.Generic;
 
 namespace Leap71
 {
@@ -261,7 +261,7 @@ namespace Leap71
                         aFinalList.Add(vecPt);
                     }
                 }
-                aFinalList.Add(aList[^1]);
+                aFinalList.Add(aList[aList.Count - 1]);
                 return aFinalList;
             }
 
@@ -278,7 +278,7 @@ namespace Leap71
                 {
                     aFinalList.Add(aList[i]);
                 }
-                aFinalList.Add(aList[^1]);
+                aFinalList.Add(aList[aList.Count - 1]);
                 return aFinalList;
             }
 
