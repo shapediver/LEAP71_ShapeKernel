@@ -59,6 +59,21 @@ namespace Leap71
             }
 
             /// <summary>
+            /// Returns a list points on the surface of the target voxelfield.
+            /// The function bClosestPointOnSurface() is applied to each input point. 
+            /// </summary>
+            public static List<Vector3> aGetSnappedSpline(List<Vector3> aPoints, Voxels voxTarget)
+            {
+                List<Vector3> aNewPoints = new List<Vector3>();
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    voxTarget.bClosestPointOnSurface(aPoints[i], out Vector3 vecSurf);
+                    aNewPoints.Add(vecSurf);
+                }
+                return aNewPoints;
+            }
+
+            /// <summary>
             /// Resamples the spline such that all points within have a constant spacing and the number of points match the specified target.
             /// Start and end points remain constant.
             /// </summary>
@@ -324,6 +339,21 @@ namespace Leap71
                     aNewList.Add(vecNewPt);
                 }
                 return aNewList;
+            }
+
+            /// <summary>
+            /// Returns the average of all list positions.
+            /// </summary>
+            public static Vector3 vecGetAverage(List<Vector3> aPoints)
+            {
+                Vector3 vecCentre = Vector3.Zero;
+                for (int i = 0; i < aPoints.Count; i++)
+                {
+                    Vector3 vecPt = aPoints[i];
+                    vecCentre += vecPt;
+                }
+                vecCentre /= aPoints.Count;
+                return vecCentre;
             }
 
             /// <summary>

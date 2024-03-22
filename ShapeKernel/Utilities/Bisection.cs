@@ -50,10 +50,13 @@ namespace Leap71
             protected uint  m_nIterations;
             protected uint  m_nMaxIterations;
             protected float m_fRemainingDiff;
+            protected float m_fBestGuess;
 
 
             /// <summary>
-            /// Class to perform a bisection method to approximate a input point for the given function that returns the desired target output value.
+            /// Class to perform a bisection method to approximate an input point
+            /// for the given function that returns the desired target output value.
+            /// The allowable error epsilon is absolute.
             /// https://en.wikipedia.org/wiki/Bisection_method
             /// </summary>
             public Bisection(
@@ -61,8 +64,8 @@ namespace Leap71
                 float fMinInput,
                 float fMaxInput,
                 float fTargetOutput,
-                float fEpsilon      = 0.01f,
-                uint nMaxIterations = 500)
+                float fEpsilon       = 0.01f,
+                uint  nMaxIterations = 500)
             {
                 m_oFunc             = oFunc;
                 m_fEpsilon          = fEpsilon;
@@ -80,10 +83,11 @@ namespace Leap71
 
             public float fFindOptimalInput()
             {
-                float fMin = m_fMinInput;
-                float fMax = m_fMaxInput;
-
-                if (fGetOutputFromFunc(fMin) * fGetOutputFromFunc(fMax) >= 0)
+                float fMin          = m_fMinInput;
+                float fMax          = m_fMaxInput;
+                float fOutputAtMin  = fGetOutputFromFunc(fMin);
+                float fOutputAtMax  = fGetOutputFromFunc(fMax);
+                if (fOutputAtMin * fOutputAtMax >= 0)
                 {
                     throw new BisectionException("No valid limits.");
                 }
@@ -106,8 +110,9 @@ namespace Leap71
                         fMin = fMid;
                     }
 
-                    m_fRemainingDiff = fMax - fMin;
+                    m_fRemainingDiff    = fMax - fMin;
                     m_nIterations++;
+                    m_fBestGuess        = fMid;
 
                     if (m_nIterations == m_nMaxIterations)
                     {
@@ -125,6 +130,11 @@ namespace Leap71
             public float fGetRemainingDiff()
             {
                 return m_fRemainingDiff;
+            }
+
+            public float fGetBestGuess()
+            {
+                return m_fBestGuess;
             }
         }
     }

@@ -1,4 +1,4 @@
-//
+﻿//
 // SPDX-License-Identifier: Apache-2.0
 //
 // The LEAP 71 ShapeKernel is an open source geometry engine
@@ -32,42 +32,42 @@
 // limitations under the License.   
 //
 
+
 using PicoGK;
-using System;
-using System.IO;
+
 
 namespace Leap71
 {
-    namespace ShapeKernel
-    {
-        public class CSVWriter
-        {
-            protected StreamWriter  m_oWriter;
-            protected string        m_strFilename;
+	namespace ShapeKernel
+	{
+		public class BaseCone
+		{
+			protected BaseCylinder	m_oCyl;
+			protected float			m_fStartRadius;
+			protected float			m_fEndRadius;
 
-            public CSVWriter(string strFilename)
-            {
-                m_strFilename       = strFilename;
-                m_oWriter           = new StreamWriter(m_strFilename);
-            }
+			/// <summary>
+			/// Simple cone shape with a linear radius distribution between start and end radius.
+			/// Derived from BaseCylinder.
+			/// </summary>
+			public BaseCone(LocalFrame oFrame, float fLength, float fStartRadius, float fEndRadius)
+			{
+				m_fStartRadius	= fStartRadius;
+				m_fEndRadius	= fEndRadius;
+				m_oCyl			= new BaseCylinder(oFrame, fLength);
+				m_oCyl.SetRadius(new SurfaceModulation(fGetLinearRadius));
+			}
 
-            public void AddLine(string strLine)
-            {
-                m_oWriter.WriteLine(strLine);
-            }
+			protected float fGetLinearRadius(float fPhi, float fLengthRatio)
+			{
+				fLengthRatio = Uf.fLimitValue(fLengthRatio, 0f, 1f);
+				return m_fStartRadius + fLengthRatio * (m_fEndRadius - m_fStartRadius);
+			}
 
-            public void ExportCSVFile()
-            {
-                try
-                {
-                    m_oWriter.Flush();
-                    Library.Log($"CSV Export: {m_strFilename} exported.");
-                }
-                catch (Exception e)
-                {
-                    Library.Log("Could not save CSV: " + e.Message);
-                }
+			public Voxels voxConstruct()
+			{
+				return m_oCyl.voxConstruct();
             }
-        }
-    }
+		}
+	}
 }

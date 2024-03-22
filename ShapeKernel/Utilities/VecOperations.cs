@@ -137,7 +137,6 @@ namespace Leap71
             public static Vector3 vecSetRadius(Vector3 vecPt, float fNewRadius)
             {
                 float fZ            = vecPt.Z;
-                float fRadius       = fGetRadius(vecPt);
                 float fPhi          = fGetPhi(vecPt);
                 Vector3 vecNewPt    = vecGetCylPoint(fNewRadius, fPhi, fZ);
                 return vecNewPt;
@@ -151,7 +150,6 @@ namespace Leap71
             {
                 float fZ            = vecPt.Z;
                 float fRadius       = fGetRadius(vecPt);
-                float fPhi          = fGetPhi(vecPt);
                 Vector3 vecNewPt    = vecGetCylPoint(fRadius, fNewPhi, fZ);
                 return vecNewPt;
             }

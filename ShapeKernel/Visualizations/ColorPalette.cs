@@ -32,8 +32,10 @@
 // limitations under the License.   
 //
 
+
 using PicoGK;
 using System;
+
 
 namespace Leap71
 {
@@ -61,7 +63,6 @@ namespace Leap71
             public static readonly ColorFloat clrBlueberry    = new ColorFloat("#4f0dbf");
             public static readonly ColorFloat clrBlue         = new ColorFloat("#4287f5");
             public static readonly ColorFloat clrToothpaste   = new ColorFloat("#25e6c9");
-
 
 
             /// <summary>

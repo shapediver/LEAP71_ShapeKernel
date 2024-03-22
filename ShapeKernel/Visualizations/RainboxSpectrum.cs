@@ -1,4 +1,4 @@
-//
+﻿//
 // SPDX-License-Identifier: Apache-2.0
 //
 // The LEAP 71 ShapeKernel is an open source geometry engine
@@ -32,41 +32,31 @@
 // limitations under the License.   
 //
 
-using PicoGK;
-using System;
-using System.IO;
+
+using System.Numerics;
+using System.Collections.Generic;
+
 
 namespace Leap71
 {
     namespace ShapeKernel
     {
-        public class CSVWriter
+        public interface ISpectrum
         {
-            protected StreamWriter  m_oWriter;
-            protected string        m_strFilename;
+            List<Vector3> aGetRawRGBList();
+        }
 
-            public CSVWriter(string strFilename)
+        public class RainboxSpectrum : ISpectrum
+        {
+            public List<Vector3> aGetRawRGBList()
             {
-                m_strFilename       = strFilename;
-                m_oWriter           = new StreamWriter(m_strFilename);
-            }
-
-            public void AddLine(string strLine)
-            {
-                m_oWriter.WriteLine(strLine);
-            }
-
-            public void ExportCSVFile()
-            {
-                try
-                {
-                    m_oWriter.Flush();
-                    Library.Log($"CSV Export: {m_strFilename} exported.");
-                }
-                catch (Exception e)
-                {
-                    Library.Log("Could not save CSV: " + e.Message);
-                }
+                List<Vector3> aRGBList = new List<Vector3>();
+                aRGBList.Add(new Vector3(0, 0, 255));                           // blue
+                aRGBList.Add(new Vector3(0, 255, 0));                           // green
+                aRGBList.Add(new Vector3(255, 255, 0));                         // yellow
+                aRGBList.Add(new Vector3(255, 130, 0));                         // orange
+                aRGBList.Add(new Vector3(255, 0, 0));                           // red
+                return aRGBList;
             }
         }
     }
